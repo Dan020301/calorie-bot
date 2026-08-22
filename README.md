@@ -29,37 +29,8 @@
 | 📅 Еженедельная сводка | Воскресенье в `WEEKLY_SUMMARY_TIME` (по умолчанию 20:00): средние, изменение веса, выводы |
 | 📋 Сводка | `/status` |
 
-## Что нужно перед запуском
+## Увидить работу можно здесь https://t.me/PPCalWorkbot
 
-1. **Токен Telegram-бота** — напиши [@BotFather](https://t.me/BotFather)
-   команду `/newbot`, следуй инструкциям и скопируй токен.
-2. **API-ключ Google Gemini** (бесплатно) — зайди на
-   [aistudio.google.com/apikey](https://aistudio.google.com/apikey),
-   нажми *Create API key* и скопируй ключ.
-   Бесплатного лимита Gemini достаточно для личного использования.
-3. **Python 3.11+**.
-
-## Установка и запуск
-
-```powershell
-cd calorie-bot
-
-# виртуальное окружение (рекомендуется)
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-
-# зависимости
-pip install -r requirements.txt
-
-# настройки
-Copy-Item .env.example .env
-# открой .env и вставь свои ключи:
-#   TELEGRAM_BOT_TOKEN=...
-#   GEMINI_API_KEY=...
-
-# запуск
-python -m bot.main
-```
 
 ## Структура проекта
 
@@ -97,6 +68,3 @@ calorie-bot/
 ## Ограничения
 
 - Оценки КБЖУ приблизительные: модель оценивает порции «на глаз» по фото.
-- Бесплатный лимит Gemini имеет суточные квоты — для личного использования их
-  хватает с запасом; если упрёшься, модель можно сменить в
-  `bot/services/vision.py` (константа `MODEL_NAME`).
