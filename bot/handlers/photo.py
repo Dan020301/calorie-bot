@@ -428,7 +428,7 @@ async def cb_add_all(call: CallbackQuery) -> None:
         return
 
     user_id = call.from_user.id
-    await database.ensure_user(user_id)
+    await database.ensure_user(user_id, call.from_user.first_name)
     for item in state["items"]:
         await database.add_meal(
             user_id=user_id,

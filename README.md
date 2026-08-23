@@ -55,6 +55,7 @@ calorie-bot/
 │   └── db/
 │       └── database.py       # SQLite (aiosqlite): еда, вес, вода, профиль
 ├── requirements.txt
+├── export_html.py             # HTML-отчёт по пользователям (python export_html.py)
 ├── .env.example              # шаблон настроек -> скопировать в .env
 ├── run_checks.py             # автопроверки (python run_checks.py)
 └── README.md

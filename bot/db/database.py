@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS water (
 
 # Колонки профиля, добавляемые миграцией к существующей таблице users
 _PROFILE_COLUMNS = {
+    "first_name": "TEXT",      # имя в Telegram (для отчётов)
     "goal": "TEXT",            # lose / maintain / gain
     "gender": "TEXT",          # male / female
     "age": "INTEGER",
@@ -167,9 +168,14 @@ async def get_weights(user_id: int, limit: int = 14) -> list[tuple[str, float]]:
 # ---------- Пользователи и напоминания ----------
 
 
-async def ensure_user(user_id: int) -> None:
+async def ensure_user(user_id: int, first_name: str | None = None) -> None:
     async with aiosqlite.connect(DATABASE_PATH) as db:
-        await db.execute("INSERT OR IGNORE INTO users (user_id) VALUES (?)", (user_id,))
+        await db.execute(
+            "INSERT INTO users (user_id, first_name) VALUES (?, ?)"
+            " ON CONFLICT(user_id) DO UPDATE SET"
+            " first_name = COALESCE(excluded.first_name, first_name)",
+            (user_id, first_name),
+        )
         await db.commit()
 
 

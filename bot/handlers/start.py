@@ -36,7 +36,7 @@ HELP_TEXT = (
 
 @router.message(CommandStart())
 async def cmd_start(message: Message) -> None:
-    await database.ensure_user(message.from_user.id)
+    await database.ensure_user(message.from_user.id, message.from_user.first_name)
     profile = await database.get_profile(message.from_user.id)
     if profile:
         await message.answer(
