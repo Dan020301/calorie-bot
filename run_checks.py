@@ -106,6 +106,8 @@ async def test_db() -> None:
     uid = 424242
 
     await database.ensure_user(uid)
+    # новые пользователи стартуют с выключенными напоминаниями
+    assert not await database.are_reminders_on(uid), "напоминания должны быть off"
     await database.add_meal(uid, "Курица", 200, 30, 8, 0)
     await database.add_meal(uid, "Рис", 150, 3, 1, 33)
 

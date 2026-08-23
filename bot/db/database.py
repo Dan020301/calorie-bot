@@ -9,7 +9,7 @@ from bot.config import DATABASE_PATH
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS users (
     user_id     INTEGER PRIMARY KEY,
-    reminder_on INTEGER NOT NULL DEFAULT 1,
+    reminder_on INTEGER NOT NULL DEFAULT 0,
     created_at  TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
 );
 
@@ -170,8 +170,9 @@ async def get_weights(user_id: int, limit: int = 14) -> list[tuple[str, float]]:
 
 async def ensure_user(user_id: int, first_name: str | None = None) -> None:
     async with aiosqlite.connect(DATABASE_PATH) as db:
+        # напоминания по умолчанию выключены (reminder_on = 0)
         await db.execute(
-            "INSERT INTO users (user_id, first_name) VALUES (?, ?)"
+            "INSERT INTO users (user_id, first_name, reminder_on) VALUES (?, ?, 0)"
             " ON CONFLICT(user_id) DO UPDATE SET"
             " first_name = COALESCE(excluded.first_name, first_name)",
             (user_id, first_name),
